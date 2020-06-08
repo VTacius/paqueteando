@@ -60,10 +60,14 @@ jobs:
         draft: false
         prerelease: false
   
-    - name: ¿Qué hice?
+    - name: Prueba
       run: |
-          ls -l
-          find .
+        nada=$(find dist/)
+        echo "$nada"
+    - name: ¿Qué hice?
+      id: ubicacion
+      run: |
+        echo "set-output name=fichero::$(find dist/ -mindepth 1)"
     - name: Subir el extra
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -71,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./dist/*.tar.gz
+        asset_path: ${{ steps.ubicacion.fichero }}
         asset_name: salida-${{ matrix.python-version }}.tar.gz 
         asset_content_type: application/gzip
 
