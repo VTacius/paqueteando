@@ -13,7 +13,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
     strategy:
       # Puedes usar las versiones de PyPy en python-version.
       # For example, pypy2 and pypy3
@@ -41,13 +40,13 @@ jobs:
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 
-	- name: Install dependencies
-  	  run: |
+    - name: Install dependencies
+      run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt 
-    
-	- name: Building
-  	  run: |
+        
+    - name: Building
+      run: |
         python setup.py bdist
     
     - name: Crear el lanzamiento
