@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = ">=3.0.6"
+mock = ">=2.0.0"
+setuptools-rust = ">=0.10.6"
+flake8 = ">=3.8.2"
+pylint = ">=2.5.2"
+
+[packages]
+requests = ">=2.23.0"
+
+[requires]
+python_version = "3.8"
+

@@ -1,0 +1,74 @@
+name: Construcción
+
+on:
+  push:
+    tags:
+      - 'v*' 
+    
+
+jobs:
+
+  lanzamiento:
+    name: Lanzamiento de una nueva versión
+
+    runs-on: ubuntu-latest
+
+    runs-on: ubuntu-latest
+    strategy:
+      # Puedes usar las versiones de PyPy en python-version.
+      # For example, pypy2 and pypy3
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Activando el repositorio
+      uses: actions/checkout@v2
+    
+    - name: Install latest nightly
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+ 
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    # You can test your matrix by printing the current Python version
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+
+	- name: Install dependencies
+  	  run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt 
+    
+	- name: Building
+  	  run: |
+        python setup.py bdist
+    
+    - name: Crear el lanzamiento
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    
+    - name: Subir el extra
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path:  ${{ steps.building.outputs.ruta_paquete }}
+        asset_name: ${{ steps.building.outputs.nombre_paquete }}
+        asset_content_type: application/gzip
+
