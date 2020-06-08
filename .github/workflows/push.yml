@@ -59,7 +59,11 @@ jobs:
         release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
-    
+  
+    - name: ¿Qué hice?
+      run: |
+          ls -l
+          find .
     - name: Subir el extra
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -67,7 +71,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path:  ${{ steps.building.outputs.ruta_paquete }}
+        asset_path: ./bdist/*.tar.gz
         asset_name: ${{ steps.building.outputs.nombre_paquete }}
         asset_content_type: application/gzip
 
