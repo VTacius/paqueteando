@@ -68,7 +68,7 @@ jobs:
       run: |
         python setup.py bdist
     
-	- name: Ubicando paquetes
+    - name: Ubicando paquetes
       id: ubicacion
       run: |
         echo "::set-output name=fichero::$(find dist/ -mindepth 1)"
@@ -82,5 +82,4 @@ jobs:
         upload_url: ${{ needs.lanzamiento.outputs.upload_url }} 
         asset_path: ${{ steps.ubicacion.outputs.fichero }}
         asset_name: salida-${{ matrix.python-version }}.tar.gz 
-        asset_content_type: application/gzip
-
+        asset_content_type: application/gz      
