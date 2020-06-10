@@ -1,20 +1,14 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
+pub mod conexion;
 
 #[pyfunction]
-fn espacio() -> PyResult<&'static str> {
-    Ok("Rustecedo")
+fn ejecutar_comando_remoto() -> PyResult<&'static str> {
+    Ok("Rustecedo es credo")
 }
 
 #[pymodule]
 fn paqueteando(_py: Python, m:&PyModule) -> PyResult<()> {
-    m.add_wrapped(wrap_pyfunction!(espacio))?;
+    m.add_wrapped(wrap_pyfunction!(ejecutar_comando_remoto))?;
     Ok(())
-}
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
 }

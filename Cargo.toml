@@ -11,6 +11,7 @@ name = "paqueteando"
 crate-type = ["cdylib"]
 
 [dependencies]
+ssh2 = "0.8"
 pyo3 = { version = "0.10.1"}
 
 [features]
