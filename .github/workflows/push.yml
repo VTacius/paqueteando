@@ -65,7 +65,7 @@ jobs:
 
     - name: Building
       run: |
-        python setup.py wheel
+        python setup.py bdist_wheel
     
     - name: Ubicando paquetes
       id: ubicacion
