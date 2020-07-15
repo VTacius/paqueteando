@@ -1,6 +1,5 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
-pub mod conexion;
 
 #[pyfunction]
 fn ejecutar_comando_remoto() -> PyResult<&'static str> {

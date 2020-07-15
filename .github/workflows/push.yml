@@ -26,8 +26,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
+        release_name: Lanzamiento ${{ github.ref }}
+        draft: true
         prerelease: false
   
   construccion:
@@ -43,30 +43,29 @@ jobs:
 
     steps:
     
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Activando el repositorio
       uses: actions/checkout@v2
 
-    - name: Install latest nightly
+    - name: Instalando Rust
       uses: actions-rs/toolchain@v1
       with:
           toolchain: nightly
           override: true
           components: rustfmt, clippy
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Configurando Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
+    - name: Instalando dependencias
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt 
 
     - name: Building
       run: |
-        python setup.py bdist
+        python setup.py wheel
     
     - name: Ubicando paquetes
       id: ubicacion
